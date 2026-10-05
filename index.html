@@ -339,8 +339,8 @@ h2:not(.kartu-menu h2) {
   }
 
   .tombol-wa {
-    padding: 9px 13px;
-    font-size: 15px;
+  padding: 6px 9px;
+  font-size: 14px;
   }
 
   .tombol-tambah {
@@ -362,9 +362,83 @@ h2:not(.kartu-menu h2) {
     font-size: 14px;
   }
 
+  /* POPUP PILIH ADMIN */
+#popupAdmin {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(79, 59, 95, 0.28);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.kotak-admin {
+  width: 280px;
+  padding: 22px;
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid #f0d8e7;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 12px 35px rgba(79, 59, 95, 0.18);
+  animation: popupAdminMasuk 0.22s ease;
+}
+
+.kotak-admin h3 {
+  margin: 0 0 16px;
+  color: #d85b9b;
+  font-size: 19px;
+}
+
+.pilih-admin {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 10px;
+  padding: 11px 14px;
+  border-radius: 14px;
+  background: #f7e4ef;
+  color: #c94f8c;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px solid #f0d8e7;
+  transition: 0.2s;
+}
+
+.pilih-admin:active {
+  transform: scale(0.96);
+  background: #f1d5e4;
+}
+
+.tutup-admin {
+  margin-top: 15px;
+  padding: 7px 14px;
+  border: none;
+  background: none;
+  color: #a99aaa;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+@keyframes popupAdminMasuk {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
   }
-  
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+    
 </style> 
+  
 <div class="pencarian">  
   <input   
     type="text"   
@@ -460,13 +534,13 @@ const menuKategori = data.filter(item =>
     `;  
   
     hasil += menuKategori.map(item => `
-    <div class="kartu-menu">
+  <div class="kartu-menu">
 
-  ${
-    item.foto
-      ? `<img src="${item.foto}" class="gambar-menu">`
-      : ''
-  }
+    ${
+      item.foto
+        ? `<img src="${item.foto}" class="gambar-menu">`
+        : ''
+    }
 
     <h2>${item.nama}</h2>
     <p class="harga">Rp ${Number(item.harga).toLocaleString('id-ID')}</p>
@@ -474,22 +548,28 @@ const menuKategori = data.filter(item =>
 
     ${
       item.tersedia === false
-        ? `<p style="color:#d85b9b;font-weight:bold;margin-top:8px;">
-             🔴 Sedang Habis
-           </p>`
+        ? `
+          <p style="color:#d85b9b;font-weight:bold;margin-top:8px;">
+            🔴 Sedang Habis
+          </p>
+        `
         : `
-          <a
-            href="https://wa.me/${NOMOR_WA}?text=${encodeURIComponent('Halo, saya mau pesan ' + item.nama)}"
-            target="_blank"
+          <button
             class="tombol-wa"
+            onclick="bukaPopupAdmin('${item.nama}')"
           >
             💬 Pesan via WhatsApp
-          </a>
-          <button class="tombol-tambah" onclick="tambahKeranjang('${item.nama}', ${item.harga})">
+          </button>
+
+          <button
+            class="tombol-tambah"
+            onclick="tambahKeranjang('${item.nama}', ${item.harga})"
+          >
             🛒
           </button>
         `
     }
+
   </div>
 `).join('');
   }  
@@ -705,4 +785,48 @@ keranjangBox.addEventListener('pointerup', () => {
   );  
 });  
 tesKoneksi();  
-</script>  
+    
+    window.bukaPopupAdmin = function(nama) {
+  const pesan = encodeURIComponent(
+    'Halo, saya mau pesan ' + nama
+  );
+
+  document.getElementById('adminSaifanah').href =
+    `https://wa.me/6281917734172?text=${pesan}`;
+
+  document.getElementById('adminHafshoh').href =
+    `https://wa.me/6282332302240?text=${pesan}`;
+
+  document.getElementById('adminIkrima').href =
+    `https://wa.me/6285336358441?text=${pesan}`;
+
+  document.getElementById('popupAdmin').style.display = 'flex';
+};
+
+window.tutupPopupAdmin = function() {
+  document.getElementById('popupAdmin').style.display = 'none';
+};
+    
+</script> 
+  
+<div id="popupAdmin">
+  <div class="kotak-admin">
+    <h3>💬 Pilih Admin WhatsApp</h3>
+
+    <a id="adminSaifanah" class="pilih-admin" target="_blank">
+      🧕🏻 Saifanah
+    </a>
+
+    <a id="adminHafshoh" class="pilih-admin" target="_blank">
+      🧕🏻 Hafshoh
+    </a>
+
+    <a id="adminIkrima" class="pilih-admin" target="_blank">
+     🧕🏻 Ikrima
+    </a>
+
+    <button class="tutup-admin" onclick="tutupPopupAdmin()">
+      ✕ Tutup
+    </button>
+  </div>
+</div>
