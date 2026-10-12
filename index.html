@@ -1,367 +1,488 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-  
-<h1>Menu Ala Chefana</h1>  <style>  
-body {  
-  font-family: Arial, sans-serif;  
-  background: linear-gradient(  
-    135deg,  
-    #f7f1ff 0%,  
-    #ffffff 45%,  
-    #fff1f7 75%,  
-    #f3e8ff 100%  
-  );  
-  padding: 14px;  
-}  
-  h1 {  
-  text-align: center;  
-  background: linear-gradient(90deg, #d85b9b, #9b7bd4);  
--webkit-background-clip: text;  
--webkit-text-fill-color: transparent;  
-  font-size: 34px;  
-  margin-bottom: 20px;  
-  font-weight: 700;  
-  letter-spacing: 1px;  
-  text-shadow: 0 2px 5px rgba(216,91,155,0.12);  
-  }  
-
-#menu {  
-  max-width: 600px;  
-  margin: 20px auto;  
-}  
-#cariMenu {  
-  width: 100%;  
-  box-sizing: border-box;  
-  padding: 13px 16px;  
-  margin-bottom: 20px;  
-  border: 1px solid #e6cf8b;  
-  border-radius: 20px;  
-  box-shadow: 0 4px 14px rgba(79,59,95,0.08);  
-  background: rgba(255,255,255,0.9);  
-  font-size: 16px;  
-  color: #4f3b5f;  
-  outline: none;  
-}  
-  
-#cariMenu::placeholder {  
-  color: #b89aaa;  
-  }  
-    
-  #cariMenu:focus {  
-  border-color: #d85b9b;  
-  box-shadow: 0 4px 14px rgba(216,91,155,0.15);  
-  }  
-    
-  .pencarian {  
-  position: relative;  
-}  
-    
-#hapusCari {  
-  position: absolute;  
-  right: 10px;  
-  top: 5px;  
-  border: none;  
-  background: none;  
-  color: #d85b9b;  
-  font-size: 18px;  
-  padding: 8px;  
-  transition: 0.2s;  
-}  
-  #hapusCari:active {  
-  transform: scale(0.88);  
-  }  
-    
-.kartu-menu {  
-  background: rgba(255, 255, 255, 0.94) !important;  
-  padding: 17px;  
-  margin-bottom: 5px;  
-  border-radius: 20px;  
-  box-shadow: 0 4px 14px rgba(79,59,95,0.08);  
-  border-left: 3px solid #e6cf8b;  
-  transition: 0.2s;  
-}  
-  
-.kartu-menu h2 {  
-  margin-top: 0;  
-  margin-bottom: 4px;  
-  font-size: 18px;  
-  color: #4f3b5f;  
-  font-weight: 700;  
-}  
-    
-  .judul-kategori {  
-  color: #d85b9b;  
-  font-size: 22px;  
-  margin-top: 30px;  
-  margin-bottom: 15px;  
-  display: inline-block;  
-  padding-bottom: 1px;  
-  border-bottom: 1.5px solid #e6cf8b;  
-  }  
-h2:not(.kartu-menu h2) {  
-  margin-top: 30px;  
-  margin-bottom: 15px;  
-}  
-    
-.harga {  
-  font-weight: bold;  
-  font-size: 15px;  
-  margin: 3px 0;  
-  color: #c94f8c;  
-}  
-.kartu-menu p:not(.harga) {  
-  color: #756878;  
-  font-size: 14px;  
-  margin-top: 1px;  
-  margin-bottom: 0;  
-  line-height: 1.4;  
-}  
-    
-  .tombol-wa {  
-  display: inline-block;  
-  margin-top: 1px;  
-  padding: 1px 10px;  
-  background: #d85b9b;  
-  box-shadow: 0 2px 6px rgba(216,91,155,0.18);  
-  color: white;  
-  text-decoration: none;  
-  border-radius: 10px;  
-  font-size: 14px;  
-  font-weight: bold;  
-  }  
-    
-.tombol-wa:active {  
-  transform: scale(0.95);  
-  box-shadow: 0 2px 6px rgba(216,91,155,0.25);  
-  }  
-  
-.tombol-wa:hover {  
-  filter: brightness(1.05);  
-  }  
-    
-.tombol-tambah {  
-  display: inline-flex;  
-  align-items: center;  
-  justify-content: center;  
-  margin-top: 10px;  
-  margin-left: 5px;  
-  width: 34px;  
-  height: 34px;  
-  padding: 0;  
-  border: none;  
-  background: #f7e4ef;  
-  color: #d85b9b;  
-  border-radius: 50%;  
-  font-size: 17px;  
-  cursor: pointer;  
-  box-shadow: 0 2px 6px rgba(216,91,155,0.18);  
-  transition: 0.2s;  
-}  
-  
-.tombol-tambah:active {  
-  transform: scale(0.88);  
-  box-shadow: 0 1px 3px rgba(216,91,155,0.12);  
-}  
-    
-#keranjangBox {  
-  position: fixed;  
-  bottom: 20px;  
-  right: 15px;  
-  width: 130px;  
-  max-height: 200px;  
-  overflow-y: auto;  
-  background: rgba(255,255,255,0.96);  
-  padding: 10px;  
-  border-radius: 20px;  
-  box-shadow: 0 4px 14px rgba(79,59,95,0.08);  
-  border: 1px solid #d9c7e8;  
-  z-index: 9999;  
-  cursor: grab;  
-  touch-action: none;  
-  user-select: none;  
-}  
-  
-#keranjangBox:active {  
-  cursor: grabbing;  
-}  
-  
-#keranjangBox h2 {  
-  margin: 0 0 8px 0;  
-  font-size: 16px;  
-  color: #d85b9b;  
-}  
-  
-#isiKeranjang {  
-  font-size: 13px;  
-  color: #5f5368;  
-}  
-    
- .tombol-jumlah {  
-  border: none;  
-  background: #f7e4ef;  
-  color: #d85b9b;  
-  border-radius: 8px;  
-  width: 17px;  
-  height: 17px;  
-  font-weight: bold;  
-  cursor: pointer;  
- }  
-  
-  #keranjangBesar {  
-  display: none;  
-  position: fixed;  
-  inset: 0;  
-  background: rgba(79,59,95,0.35);  
-  z-index: 10000;  
-  padding: 0 20px 20px;  
-  box-sizing: border-box;  
-}  
-  
-.isi-keranjang-besar {  
-  position: relative;  
-  max-width: 500px;  
-  height: 85vh;  
-  overflow-y: auto;  
-  margin: 0 auto;  
-  background: #fff;  
-  border-radius: 20px;  
-  padding: 0 20px 20px;  
-  box-sizing: border-box;  
-  box-shadow: 0 8px 30px rgba(0,0,0,0.2);  
-}  
-  
-#tutupKeranjang {  
-  position: absolute;  
-  top: 30px;  
-  right: 12px;  
-  border: none;  
-  background: #f7e4ef;  
-  color: #d85b9b;  
-  border-radius: 50%;  
-  width: 30px;  
-  height: 30px;  
-  font-size: 16px;  
-  cursor: pointer;  
-}  
-  
-  .isi-keranjang-besar h2 {  
-  margin-top: 0;  
-  }  
-    
-#tombolPesanSemua {  
-  width: 100%;  
-  margin-top: 15px;  
-  padding: 10px;  
-  border: none;  
-  border-radius: 12px;  
-  background: #d85b9b;  
-  color: white;  
-  font-size: 14px;  
-  font-weight: bold;  
-  cursor: pointer;  
-  }  
-    
-  .total-keranjang {  
-  margin-top: 18px;  
-  padding: 12px;  
-  background: #f7e4ef;  
-  border-radius: 12px;  
-  color: #d85b9b;  
-  font-size: 17px;  
-  font-weight: bold;  
-  text-align: center;  
-  }  
-  
-  .kartu-menu {  
-  animation: munculMenu 0.5s ease both;  
-}  
-  
-@keyframes munculMenu {  
-  from {  
-    opacity: 0;  
-    transform: translateY(10px);  
-  }  
-  to {  
-    opacity: 1;  
-    transform: translateY(0);  
-  }  
-} 
-.gambar-menu {
-  width: 65px;
-  height: 65px;
-  object-fit: cover;
-  border-radius: 12px;
-  float: right;
-  margin-left: 12px;
-  margin-bottom: 6px;
+<!DOCTYPE html>  <html>  
+<head>  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+</head>  
+<body>  <h1>Menu Ala Chefana</h1>  <style>    
+body {    
+  font-family: Arial, sans-serif;    
+  background: linear-gradient(    
+    135deg,    
+    #f7f1ff 0%,    
+    #ffffff 45%,    
+    #fff1f7 75%,    
+    #f3e8ff 100%    
+  );    
+  padding: 14px;    
+}    
+  h1 {    
+  text-align: center;    
+  background: linear-gradient(90deg, #d85b9b, #9b7bd4);    
+-webkit-background-clip: text;    
+-webkit-text-fill-color: transparent;    
+  font-size: 34px;    
+  margin-bottom: 20px;    
+  font-weight: 700;    
+  letter-spacing: 1px;    
+  text-shadow: 0 2px 5px rgba(216,91,155,0.12);    
+  }    #menu {
+max-width: 600px;
+margin: 20px auto;
 }
 
-  @media (max-width: 600px) {
+.petunjuk-pesan {
+  max-width: 600px; margin: 0 auto 14px; padding: 13px 15px;
+  display: flex; flex-direction: column; gap: 5px;
+  background: rgba(255,255,255,.9); border: 1px solid #ead5e4;
+  border-radius: 16px; color: #5f5368; font-size: 13px; line-height: 1.45;
+}
+.petunjuk-pesan strong { color: #c94f8c; font-size: 15px; }
+#navigasiKategori {
+  display: flex; gap: 8px; overflow-x: auto; white-space: nowrap;
+  max-width: 600px; margin: 0 auto 16px; padding: 4px 2px 10px;
+  scrollbar-width: thin; -webkit-overflow-scrolling: touch;
+}
+#navigasiKategori button {
+  flex: 0 0 auto; border: 1px solid #e6cf8b; border-radius: 999px;
+  padding: 9px 14px; background: #fff; color: #7b5270; font-weight: 700;
+  cursor: pointer; box-shadow: 0 2px 6px rgba(79,59,95,.06);
+}
+#navigasiKategori button:active, #navigasiKategori button.aktif {
+  background: linear-gradient(135deg,#e477ad,#c967a6); color: #fff; border-color: #c967a6;
+}
+.bagian-kategori { scroll-margin-top: 12px; }
 
-  body {
-    padding: 18px 14px 120px;
-  }
+#cariMenu {
+width: 100%;
+box-sizing: border-box;
+padding: 13px 16px;
+margin-bottom: 20px;
+border: 1px solid #e6cf8b;
+border-radius: 20px;
+box-shadow: 0 4px 14px rgba(79,59,95,0.08);
+background: rgba(255,255,255,0.9);
+font-size: 16px;
+color: #4f3b5f;
+outline: none;
+}
 
-  h1 {
-    font-size: 38px;
-    margin-bottom: 24px;
-  }
+#cariMenu::placeholder {
+color: #b89aaa;
+}
 
-  #cariMenu {
-    padding: 16px 16px;
-    font-size: 18px;
-  }
+#cariMenu:focus {
+border-color: #d85b9b;
+box-shadow: 0 4px 14px rgba(216,91,155,0.15);
+}
 
-  .judul-kategori {
-    font-size: 24px;
-  }
+.pencarian {
+position: relative;
+}
 
-  .kartu-menu {
-    padding: 20px;
-    margin-bottom: 8px;
-  }
+#hapusCari {
+position: absolute;
+right: 10px;
+top: 5px;
+border: none;
+background: none;
+color: #d85b9b;
+font-size: 18px;
+padding: 8px;
+transition: 0.2s;
+}
+#hapusCari:active {
+transform: scale(0.88);
+}
 
-  .kartu-menu h2 {
-    font-size: 20px;
-  }
+.kartu-menu {
+background: rgba(255, 255, 255, 0.94) !important;
+padding: 17px;
+margin-bottom: 5px;
+border-radius: 20px;
+box-shadow: 0 4px 14px rgba(79,59,95,0.08);
+border-left: 3px solid #e6cf8b;
+transition: 0.2s;
+}
 
-  .harga {
-    font-size: 17px;
-  }
+.kartu-menu h2 {
+margin-top: 0;
+margin-bottom: 4px;
+font-size: 18px;
+color: #4f3b5f;
+font-weight: 700;
+}
 
-  .kartu-menu p:not(.harga) {
-    font-size: 16px;
-    line-height: 1.5;
-  }
+.judul-kategori {
+color: #d85b9b;
+font-size: 22px;
+margin-top: 30px;
+margin-bottom: 15px;
+display: inline-block;
+padding-bottom: 1px;
+border-bottom: 1.5px solid #e6cf8b;
+}
+h2:not(.kartu-menu h2) {
+margin-top: 30px;
+margin-bottom: 15px;
+}
 
-  .tombol-wa {
-  padding: 6px 9px;
-  font-size: 14px;
-  }
+.harga {
+font-weight: bold;
+font-size: 15px;
+margin: 3px 0;
+color: #c94f8c;
+}
+.kartu-menu p:not(.harga) {
+color: #756878;
+font-size: 14px;
+margin-top: 1px;
+margin-bottom: 0;
+line-height: 1.4;
+}
 
-  .tombol-tambah {
-    width: 38px;
-    height: 38px;
-    font-size: 18px;
-  }
+.tombol-wa {
+display: inline-block;
+margin-top: 1px;
+padding: 1px 10px;
+background: #d85b9b;
+box-shadow: 0 2px 6px rgba(216,91,155,0.18);
+color: white;
+text-decoration: none;
+border-radius: 10px;
+font-size: 14px;
+font-weight: bold;
+}
 
-  #keranjangBox {
-    width: 155px;
-    padding: 12px;
-  }
+.tombol-wa:active {
+transform: scale(0.95);
+box-shadow: 0 2px 6px rgba(216,91,155,0.25);
+}
 
-  #keranjangBox h2 {
-    font-size: 17px;
-  }
+.tombol-wa:hover {
+filter: brightness(1.05);
+}
 
-  #isiKeranjang {
-    font-size: 14px;
-  }
+.tombol-tambah {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+margin-top: 10px;
+margin-left: 5px;
+width: 34px;
+height: 34px;
+padding: 0;
+border: none;
+background: #f7e4ef;
+color: #d85b9b;
+border-radius: 50%;
+font-size: 17px;
+cursor: pointer;
+box-shadow: 0 2px 6px rgba(216,91,155,0.18);
+transition: 0.2s;
+}
 
+.tombol-tambah:active {
+transform: scale(0.88);
+box-shadow: 0 1px 3px rgba(216,91,155,0.12);
+}
+
+/* Tombol mengambang: keranjang + kembali ke atas */
+#keranjangBox {
+  position: fixed;
+  right: 14px;
+  bottom: 18px;
+  z-index: 9999;
+  width: 58px;
+  height: 58px;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  cursor: pointer;
+  user-select: none;
+}
+#keranjangBox h2, #isiKeranjang { display: none !important; }
+#tombolIkonKeranjang {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #f0c5dc;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(79,59,95,.2);
+  font-size: 27px;
+}
+#jumlahBadgeKeranjang {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 4px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  background: #e53975;
+  color: #fff;
+  font: bold 11px Arial, sans-serif;
+}
+#tombolKembaliAtas {
+  position: fixed;
+  right: 82px;
+  bottom: 22px;
+  z-index: 9999;
+  width: 48px;
+  height: 48px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #f0c5dc;
+  border-radius: 50%;
+  background: #fff;
+  color: #c94f8c;
+  box-shadow: 0 4px 14px rgba(79,59,95,.18);
+  font-size: 26px;
+  cursor: pointer;
+}
+#tombolKembaliAtas.muncul { display: flex; }
+@media (max-width: 480px) {
+  #keranjangBox { right: 12px; bottom: 14px; }
+  #tombolKembaliAtas { right: 76px; bottom: 18px; }
+}
+
+.tombol-jumlah {
+border: none;
+background: #f7e4ef;
+color: #d85b9b;
+border-radius: 8px;
+width: 17px;
+height: 17px;
+font-weight: bold;
+cursor: pointer;
+}
+
+#keranjangBesar {
+display: none;
+position: fixed;
+inset: 0;
+background: rgba(79,59,95,0.35);
+z-index: 10000;
+padding: 0 20px 20px;
+box-sizing: border-box;
+}
+
+.isi-keranjang-besar {
+position: relative;
+max-width: 500px;
+height: 85vh;
+overflow-y: auto;
+margin: 0 auto;
+background: #fff;
+border-radius: 20px;
+padding: 0 20px 20px;
+box-sizing: border-box;
+box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+}
+
+#tutupKeranjang {
+position: absolute;
+top: 30px;
+right: 12px;
+border: none;
+background: #f7e4ef;
+color: #d85b9b;
+border-radius: 50%;
+width: 30px;
+height: 30px;
+font-size: 16px;
+cursor: pointer;
+}
+
+.isi-keranjang-besar h2 {
+margin-top: 0;
+}
+
+#tombolPesanSemua {
+width: 100%;
+margin-top: 15px;
+padding: 6px 9px;
+border: none;
+border-radius: 10px;
+background: #d85b9b;
+color: white;
+font-size: 14px;
+font-weight: bold;
+cursor: pointer;
+box-shadow: 2px 3px 0 rgba(79, 59, 95, 0.70);
+}
+
+#tombolPesanSemua:active {
+transform: translate(2px, 3px);
+box-shadow: none;
+}
+
+.total-keranjang {
+margin-top: 18px;
+padding: 12px;
+background: #f7e4ef;
+border-radius: 12px;
+color: #d85b9b;
+font-size: 17px;
+font-weight: bold;
+text-align: center;
+}
+
+.kartu-menu {
+animation: munculMenu 0.5s ease both;
+}
+
+@keyframes munculMenu {
+from {
+opacity: 0;
+transform: translateY(10px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+.gambar-menu {
+width: 65px;
+height: 65px;
+object-fit: cover;
+border-radius: 12px;
+float: right;
+margin-left: 12px;
+margin-bottom: 6px;
+}
+
+@media (max-width: 600px) {
+
+body {
+padding: 18px 14px 120px;
+}
+
+h1 {
+font-size: 38px;
+margin-bottom: 24px;
+}
+
+#cariMenu {
+padding: 16px 16px;
+font-size: 18px;
+}
+
+.judul-kategori {
+font-size: 24px;
+}
+
+.kartu-menu {
+padding: 20px;
+margin-bottom: 8px;
+}
+
+.kartu-menu h2 {
+font-size: 20px;
+}
+
+.harga {
+font-size: 17px;
+}
+
+.kartu-menu p:not(.harga) {
+font-size: 16px;
+line-height: 1.5;
+}
+
+.tombol-wa {
+padding: 6px 9px;
+font-size: 14px;
+}
+
+.tombol-tambah {
+width: 38px;
+height: 38px;
+font-size: 18px;
+}
+
+/* POPUP CHECKOUT */
+
+#popupCheckout {
+display: none;
+position: fixed;
+inset: 0;
+background: rgba(79, 59, 95, 0.28);
+backdrop-filter: blur(4px);
+-webkit-backdrop-filter: blur(4px);
+z-index: 99998;
+align-items: center;
+justify-content: center;
+padding: 20px;
+box-sizing: border-box;
+}
+
+.kotak-checkout {
+width: 280px;
+padding: 22px;
+background: rgba(255, 255, 255, 0.97);
+border: 1px solid #f0d8e7;
+border-radius: 24px;
+box-shadow: 0 12px 35px rgba(79, 59, 95, 0.18);
+}
+
+.kotak-checkout h3 {
+margin: 0 0 16px;
+color: #d85b9b;
+text-align: center;
+}
+
+#namaPemesan {
+width: 100%;
+box-sizing: border-box;
+padding: 11px 13px;
+border: 1px solid #ead7e3;
+border-radius: 12px;
+outline: none;
+font-size: 14px;
+margin-bottom: 12px;
+}
+
+.pilihan-pembayaran {
+display: flex;
+gap: 8px;
+}
+
+.pilihan-pembayaran button {
+flex: 1;
+padding: 10px 6px;
+border: none;
+border-radius: 12px;
+background: #f7e4ef;
+color: #c94f8c;
+font-weight: bold;
+cursor: pointer;
+}
+
+.pilihan-pembayaran button:active {
+transform: scale(0.96);
+}
+
+.tutup-checkout {
+display: block;
+margin: 15px auto 0;
+border: none;
+background: none;
+color: #a99aaa;
+font-size: 13px;
+} 
+    
   /* POPUP PILIH ADMIN */
 #popupAdmin {
   display: none;
@@ -436,7 +557,282 @@ h2:not(.kartu-menu h2) {
     transform: scale(1) translateY(0);
   }
 }
-    
+    .centang-pilihan {
+  display: none;
+  float: right;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #d85b9b;
+  color: white;
+  text-align: center;
+  line-height: 22px;
+}
+
+.pilihan-pembayaran button.dipilih .centang-pilihan,
+.pilihan-terima button.dipilih .centang-pilihan {
+  display: inline-block;
+}
+
+.rekening-transfer {
+  display: none;
+  background: #fff8f2;
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 12px;
+}
+
+.rekening-item {
+  background: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 8px 0;
+}
+
+.nomor-rekening {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 7px;
+}
+
+.tombol-salin {
+  border: none;
+  background: #eee;
+  padding: 6px 9px;
+  border-radius: 8px;
+}
+
+.catatan-transfer {
+  margin-top: 10px;
+  color: #b34a4a;
+  font-size: 14px;
+}
+
+.cara-terima {
+  margin-top: 15px;
+}
+
+.pilihan-terima {
+  display: flex;
+  gap: 8px;
+}
+
+.pilihan-terima button {
+  flex: 1;
+  padding: 10px 6px;
+  border: none;
+  border-radius: 12px;
+  background: #f7e4ef;
+  color: #c94f8c;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.pilihan-terima button.dipilih {
+  background: #f1d5e4;
+}
+
+.info-pengambilan,
+.info-pengantaran {
+  display: none;
+  background: #fff8f2;
+  padding: 12px;
+  border-radius: 12px;
+  margin-top: 8px;
+}
+
+.tombol-lokasi {
+  display: inline-block;
+  background: #4285f4;
+  color: white;
+  text-decoration: none;
+  padding: 9px 12px;
+  border-radius: 9px;
+}
+
+#alamatPengantaran {
+  width: 100%;
+  min-height: 80px;
+  box-sizing: border-box;
+  border: 1px solid #ead7e3;
+  border-radius: 12px;
+  padding: 10px;
+  resize: vertical;
+}
+
+ /* 💌 Catatan tambahan */
+.catatan-tambahan {
+  margin-top: 10px;
+  background: linear-gradient(135deg, #fff7fb, #fdf2ff);
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid #f2d8e8;
+}
+
+.catatan-tambahan h4 {
+  margin: 0 0 5px;
+  color: #c6538f;
+  font-size: 13px;
+}
+
+#catatanTambahan {
+  width: 100%;
+  min-height: 42px;
+  height: 42px;
+  box-sizing: border-box;
+  border: 1px solid #ead7e3;
+  border-radius: 9px;
+  padding: 7px 9px;
+  background: #fff;
+  color: #555;
+  resize: vertical;
+  outline: none;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+}
+
+#catatanTambahan::placeholder {
+  color: #c5a5b5;
+  font-size: 11px;
+}
+
+/* 📋 Tulisan kecil "Tersalin" */
+.status-salin {
+  display: block;
+  margin-top: 5px;
+  font-size: 11px;
+  color: #c6538f;
+  text-align: right;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.status-salin.muncul {
+  opacity: 1;
+}
+
+
+/* 💬 Tombol Pesan via WhatsApp */
+.tombol-lanjut-wa {
+  width: 100%;
+  margin-top: 12px;
+  padding: 11px 14px;
+  border: 2px solid #542d4f;
+  border-radius: 12px;
+  background: #d85b9b;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+
+  /* bayangan tipis: atas terang, bawah hitam tipis */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 2px 0 rgba(0, 0, 0, 0.35);
+
+  transition: all 0.2s ease;
+}
+  
+.tombol-lanjut-wa:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #542d4f;
+}
+
+.nomor-rekening.mandiri {
+  padding-right: 8px;
+}
+
+.nomor-rekening.mandiri .tombol-salin {
+  margin-left: -6px;
+}  
+
+#tombolPesanSemua {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 16px;
+  border: 2px solid #542d4f;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #e477ad, #c967a6);
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+
+  /* atas putih, bawah hitam tipis */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 2px 0 rgba(0, 0, 0, 0.35);
+
+  transition: all 0.2s ease;
+}
+
+#tombolPesanSemua:hover {
+  transform: translateY(-1px);
+}
+
+#tombolPesanSemua:active {
+  transform: translateY(2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 1px 0 rgba(0, 0, 0, 0.3);
+}  
+
+#popupAdmin {
+  display: none;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(40, 20, 35, 0.55);
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+#popupAdmin .kotak-admin {
+  position: relative;
+  z-index: 100000;
+  width: 100%;
+  max-width: 380px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 24px;
+  padding: 22px;
+  box-sizing: border-box;
+}
+
+#popupAdmin .pilih-admin {
+  display: block;
+  position: relative;
+  z-index: 100001;
+  text-decoration: none;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+/* Peringatan checkout */
+#pesanValidasiCheckout {
+  display: none;
+  color: #e00000 !important;
+  background-color: #fff0f0 !important;
+  border: 1px solid #ffb3b3 !important;
+  border-radius: 10px;
+  padding: 4px 6px;
+margin: 5px 0;
+max-width: 260px;
+margin-left: auto;
+margin-right: auto;
+  font-size: 11px !important;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.4;
+}
 </style> 
   
 <div class="pencarian">  
@@ -447,10 +843,22 @@ h2:not(.kartu-menu h2) {
   >  
   <button id="hapusCari">✕</button>  
 </div>  
-<div id="menu">Memuat menu...</div>  <div id="keranjangBox">  
-  <h2>🛒 Keranjang</h2>  
-  <div id="isiKeranjang">Belum ada pesanan</div>  
-</div>  <div id="keranjangBesar">  
+<div class="petunjuk-pesan">
+  <strong>💗 Cara pesan:</strong>
+  <span>1. Pilih kategori atau cari menu.</span>
+  <span>2. Tekan 🛒 untuk memasukkan menu ke keranjang.</span>
+  <span>3. Ketuk keranjang untuk cek jumlah dan total.</span>
+  <span>4. Tekan <b>Lanjutkan Pesanan</b>, lengkapi data, lalu pilih admin WhatsApp.</span>
+</div>
+<nav id="navigasiKategori" aria-label="Pilih kategori menu"></nav>
+<div id="menu">Memuat menu...</div>
+<div id="keranjangBox" role="button" tabindex="0" aria-label="Buka keranjang">
+  <div id="tombolIkonKeranjang">🛒<span id="jumlahBadgeKeranjang">0</span></div>
+  <h2>🛒 Keranjang</h2>
+  <div id="isiKeranjang">Belum ada pesanan</div>
+</div>
+<button id="tombolKembaliAtas" type="button" aria-label="Kembali ke atas" title="Kembali ke atas">↑</button>
+<div id="keranjangBesar">  
   <div class="isi-keranjang-besar">  
     <button id="tutupKeranjang">✕</button>  <h2>🛒 Keranjang Saya</h2>  
 
@@ -465,7 +873,7 @@ h2:not(.kartu-menu h2) {
 
 <button id="tombolPesanSemua">
 
-💬 Pesan Semua via WhatsApp
+  🛍️✨ Lanjutkan Pesanan 
 </button>
 
   </div>  
@@ -475,6 +883,8 @@ const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_GLpIItEzLpzoZenpRd-sIw_UHvgWlts
 const NOMOR_WA = '6281917734172';  
     
 let keranjang = [];  
+let metodePembayaran = '';
+let caraTerima = '';  
     
 async function tesKoneksi() {  
   const box = document.getElementById('menu');  
@@ -513,11 +923,16 @@ const inputCari = document.getElementById('cariMenu');
   'Sedia'  
 ];  
   
-function tampilkanMenu() {  
-  let hasil = '';  
-  const kataKunci = inputCari.value.toLowerCase().trim();  
-  
-urutanKategori.forEach(kategori => {  
+function tampilkanMenu() {
+  let hasil = '';
+  const kataKunci = inputCari.value.toLowerCase().trim();
+  const navKategori = document.getElementById('navigasiKategori');
+  const kategoriAda = urutanKategori.filter(kategori => data.some(item => item.kategori === kategori));
+  navKategori.innerHTML = kataKunci ? '' : kategoriAda.map((kategori, i) =>
+    `<button type="button" class="${i === 0 ? 'aktif' : ''}" data-target="kategori-${i}">${kategori}</button>`
+  ).join('');
+
+  urutanKategori.forEach((kategori, indeksKategori) => {
   const kataKunci = inputCari.value.toLowerCase().trim();  
   
 const menuKategori = data.filter(item =>  
@@ -529,10 +944,9 @@ const menuKategori = data.filter(item =>
 );  
   
   if (menuKategori.length > 0) {  
-    hasil += `  
-      <h2 class="judul-kategori">${kategori}</h2>  
-    `;  
-  
+    menuKategori.sort((a, b) => String(a.nama || '').localeCompare(String(b.nama || ''), 'id', { sensitivity: 'base' }));
+    hasil += `<section class="bagian-kategori" id="kategori-${indeksKategori}"><h2 class="judul-kategori">${kategori}</h2>`;
+
     hasil += menuKategori.map(item => `
   <div class="kartu-menu">
 
@@ -571,11 +985,20 @@ const menuKategori = data.filter(item =>
     }
 
   </div>
-`).join('');
-  }  
+`).join('') + '</section>';
+  }
+});
+
+box.innerHTML = hasil || '<p style="text-align:center;color:#7b5270;">Menu tidak ditemukan, coba kata kunci lain ya 💗</p>';
+
+navKategori.querySelectorAll('button').forEach(tombol => {
+  tombol.addEventListener('click', () => {
+    navKategori.querySelectorAll('button').forEach(b => b.classList.remove('aktif'));
+    tombol.classList.add('aktif');
+    const target = document.getElementById(tombol.dataset.target);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 });  
-  
-box.innerHTML = hasil;  
   }  
   
 tampilkanMenu();  
@@ -583,7 +1006,7 @@ tampilkanMenu();
 inputCari.addEventListener('input', () => {  
   tampilkanMenu();  
 });  
-  
+
 hapusCari.addEventListener('click', () => {  
   inputCari.value = '';  
   tampilkanMenu();  
@@ -592,10 +1015,13 @@ hapusCari.addEventListener('click', () => {
   function tampilkanKeranjang() {  
   const isi = document.getElementById('isiKeranjang');  
     const judul = document.querySelector('#keranjangBox h2');  
-judul.innerHTML = `🛒 Keranjang (${keranjang.length})`;  
-  if (keranjang.length === 0) {  
-    isi.innerHTML = 'Belum ada pesanan';  
-    return;  
+judul.innerHTML = `🛒 Keranjang (${keranjang.length})`;
+  const badge = document.getElementById('jumlahBadgeKeranjang');
+  if (badge) badge.textContent = keranjang.length > 99 ? '99+' : String(keranjang.length);
+  if (keranjang.length === 0) {
+    isi.innerHTML = 'Belum ada pesanan';
+    document.getElementById('isiKeranjangBesar').innerHTML = 'Belum ada pesanan';
+    return;
   }  
   
   const kelompok = {};  
@@ -681,8 +1107,7 @@ window.tambahKeranjang = function(nama, harga) {
     🛒 <strong>${nama}</strong><br>  
     berhasil ditambahkan ✨  
   `;  
-  
-  notifikasi.style.position = 'fixed';  
+notifikasi.style.position = 'fixed';  
   notifikasi.style.bottom = '20px';  
   notifikasi.style.left = '50%';  
   notifikasi.style.transform = 'translateX(-50%)';  
@@ -710,83 +1135,49 @@ window.tambahKeranjang = function(nama, harga) {
     `;  
   }  
 }  
-const keranjangBox = document.getElementById('keranjangBox');  
-  
-let sedangGeser = false;  
-let offsetX = 0;  
-let offsetY = 0;  
-  
-keranjangBox.addEventListener('pointerdown', (e) => {  
-  sedangGeser = true;  
-  
-  const posisi = keranjangBox.getBoundingClientRect();  
-  
-  offsetX = e.clientX - posisi.left;  
-  offsetY = e.clientY - posisi.top;  
-  
-  keranjangBox.style.right = 'auto';  
-  keranjangBox.style.bottom = 'auto';  
-  
-  keranjangBox.setPointerCapture(e.pointerId);  
+const keranjangBox = document.getElementById('keranjangBox');
+keranjangBox.addEventListener('click', () => {
+  document.getElementById('keranjangBesar').style.display = 'block';
+});
+keranjangBox.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    document.getElementById('keranjangBesar').style.display = 'block';
+  }
+});
+
+const tombolKembaliAtas = document.getElementById('tombolKembaliAtas');
+function perbaruiTombolKembaliAtas() {
+  tombolKembaliAtas.classList.toggle('muncul', window.scrollY > 220);
+}
+window.addEventListener('scroll', perbaruiTombolKembaliAtas, { passive: true });
+tombolKembaliAtas.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+perbaruiTombolKembaliAtas();
+
+  document.getElementById('tutupKeranjang').addEventListener('click', () => {
+  document.getElementById('keranjangBesar').style.display = 'none';
+});
+document.getElementById('keranjangBesar').addEventListener('click', (e) => {
+  if (e.target.id === 'keranjangBesar') e.currentTarget.style.display = 'none';
 });  
+  document.getElementById('tombolPesanSemua').addEventListener('click', () => {
+  if (keranjang.length === 0) {
+    return;
+  }
+
+  document.getElementById('namaPemesan').value = '';
+  document.getElementById('popupCheckout').style.display = 'flex';
+
+  setTimeout(() => {
+    document.getElementById('namaPemesan').focus();
+  }, 100);
+});
   
-keranjangBox.addEventListener('pointermove', (e) => {  
-  if (!sedangGeser) return;  
-  
-  keranjangBox.style.left = (e.clientX - offsetX) + 'px';  
-  keranjangBox.style.top = (e.clientY - offsetY) + 'px';  
-});  
-  
-keranjangBox.addEventListener('pointerup', () => {  
-  sedangGeser = false;  
-});   
-  keranjangBox.addEventListener('click', () => {  
-  document.getElementById('keranjangBesar').style.display = 'block';  
-});  
-    
-  document.getElementById('tutupKeranjang').addEventListener('click', () => {  
-  document.getElementById('keranjangBesar').style.display = 'none';  
-});  
-  document.getElementById('tombolPesanSemua').addEventListener('click', () => {  
-  if (keranjang.length === 0) {  
-    return;  
-  }  
-  
-  let pesan = 'Halo, saya mau pesan:%0A%0A';  
-  
-  const kelompok = {};  
-  
-  keranjang.forEach(item => {  
-    if (!kelompok[item.nama]) {  
-      kelompok[item.nama] = {  
-        harga: Number(item.harga),  
-        jumlah: 0  
-      };  
-    }  
-  
-    kelompok[item.nama].jumlah += 1;  
-  });  
-  
-  let total = 0;  
-  
-  Object.keys(kelompok).forEach(nama => {  
-    const item = kelompok[nama];  
-    const subtotal = item.harga * item.jumlah;  
-    total += subtotal;  
-  
-    pesan += `• ${nama} × ${item.jumlah} = Rp ${subtotal.toLocaleString('id-ID')}%0A`;  
-  });  
-  
-  pesan += `%0ATotal: Rp ${total.toLocaleString('id-ID')}`;  
-  
-  window.open(  
-    `https://wa.me/${NOMOR_WA}?text=${pesan}`,  
-    '_blank'  
-  );  
-});  
 tesKoneksi();  
-    
-    window.bukaPopupAdmin = function(nama) {
+
+ window.bukaPopupAdmin = function(nama) {
   const pesan = encodeURIComponent(
     'Halo, saya mau pesan ' + nama
   );
@@ -806,27 +1197,322 @@ tesKoneksi();
 window.tutupPopupAdmin = function() {
   document.getElementById('popupAdmin').style.display = 'none';
 };
-    
-</script> 
+
+  window.tutupCheckout = function() {
+  document.getElementById('popupCheckout').style.display = 'none';
+};
+
   
+window.pilihPembayaran = function(metode) {
+  const tombolCash = document.getElementById('tombolCash');
+  const tombolTransfer = document.getElementById('tombolTransfer');
+  const rekening = document.getElementById('rekeningTransfer');
+
+  tombolCash.classList.remove('dipilih');
+  tombolTransfer.classList.remove('dipilih');
+
+  metodePembayaran = metode;
+
+  if (metode === 'Cash') {
+    tombolCash.classList.add('dipilih');
+    rekening.style.display = 'none';
+  }
+
+  if (metode === 'Transfer Bank') {
+    tombolTransfer.classList.add('dipilih');
+    rekening.style.display = 'block';
+  }
+};
+  
+window.salinRekening = function(nomor, idStatus) {
+  navigator.clipboard.writeText(nomor);
+
+  const status = document.getElementById(idStatus);
+
+  if (status) {
+    status.classList.add('muncul');
+
+    setTimeout(() => {
+      status.classList.remove('muncul');
+    }, 2000);
+  }
+};
+
+window.pilihCaraTerima = function(cara) {
+  const lokasiToko = document.getElementById('lokasiToko');
+  const formAntar = document.getElementById('formAntar');
+  const tombolAmbil = document.getElementById('tombolAmbil');
+  const tombolAntar = document.getElementById('tombolAntar');
+
+  lokasiToko.style.display = 'none';
+  formAntar.style.display = 'none';
+
+  tombolAmbil.classList.remove('dipilih');
+  tombolAntar.classList.remove('dipilih');
+
+  caraTerima = cara;
+
+  if (cara === 'Ambil sendiri') {
+    tombolAmbil.classList.add('dipilih');
+    lokasiToko.style.display = 'block';
+  }
+
+  if (cara === 'Diantar kurir') {
+    tombolAntar.classList.add('dipilih');
+    formAntar.style.display = 'block';
+  }
+};
+
+window.lanjutWhatsApp = function() {
+  const nama = document.getElementById('namaPemesan').value.trim();
+  const alamat = document.getElementById('alamatPengantaran').value.trim();
+  const catatan = document.getElementById('catatanTambahan').value.trim();
+  const peringatan = document.getElementById('pesanValidasiCheckout');
+
+  let pesanError = '';
+
+  if (!nama || !metodePembayaran || !caraTerima) {
+    pesanError = '💗 Yuk, isi nama, pilih pembayaran, dan cara menerima pesanan dulu yaa!';
+  } else if (caraTerima === 'Diantar kurir' && !alamat) {
+    pesanError = '📍 Alamat pengantaran belum diisi, cinta. Lengkapi dulu yaa!';
+  } else if (keranjang.length === 0) {
+    pesanError = '🛒 Keranjangmu masih kosong. Pilih menu dulu yaa!';
+  }
+
+  if (pesanError) {
+    peringatan.textContent = pesanError;
+    peringatan.style.display = 'block';
+    return;
+  }
+
+  peringatan.style.display = 'none';
+
+  let pesan = `🛍️ *PESANAN ALA CHEFANA*\n\n`;
+  pesan += `👤 Nama: ${nama}\n\n`;
+  pesan += `🍽️ *Pesanan:*\n`;
+
+  const kelompok = {};
+
+  keranjang.forEach(item => {
+    if (!kelompok[item.nama]) {
+      kelompok[item.nama] = {
+        nama: item.nama,
+        harga: Number(item.harga),
+        jumlah: 0
+      };
+    }
+    kelompok[item.nama].jumlah++;
+  });
+
+  let total = 0;
+  
+Object.values(kelompok).forEach(item => {
+    const subtotal = item.harga * item.jumlah;
+    total += subtotal;
+    pesan += `• ${item.nama} × ${item.jumlah} = Rp ${subtotal.toLocaleString('id-ID')}\n`;
+  });
+
+  pesan += `\n💰 *Total: Rp ${total.toLocaleString('id-ID')}*\n`;
+  pesan += `💳 Pembayaran: ${metodePembayaran}\n`;
+  pesan += `📦 Cara menerima: ${caraTerima}\n`;
+
+  if (caraTerima === 'Ambil sendiri') {
+    pesan += `📍 Lokasi: Ala Chefana, Jl. Dirgahayu, Atoran, Bugih, Kec. Pamekasan, Kabupaten Pamekasan, Jawa Timur\n`;
+  } else {
+    pesan += `📍 Alamat: ${alamat}\n`;
+    pesan += `🛵 Ongkir: dikonfirmasi admin\n`;
+  }
+
+  if (catatan) {
+    pesan += `\n💌 *Catatan tambahan: ${catatan}*\n`;
+  }
+
+  if (metodePembayaran === 'Transfer Bank') {
+    pesan += `\n💗 Saya akan mengirimkan bukti transfer melalui WhatsApp.\n`;
+  }
+
+  pesan += `\nTerima kasih 💗`;
+
+  const pesanEncoded = encodeURIComponent(pesan);
+
+  document.getElementById('adminSaifanah').href =
+    `https://wa.me/6281917734172?text=${pesanEncoded}`;
+
+  document.getElementById('adminHafshoh').href =
+    `https://wa.me/6282332302240?text=${pesanEncoded}`;
+
+  document.getElementById('adminIkrima').href =
+    `https://wa.me/6285336358441?text=${pesanEncoded}`;
+
+  document.getElementById('popupCheckout').style.display = 'none';
+  document.getElementById('popupAdmin').style.display = 'flex';
+};
+
+</script> 
+
 <div id="popupAdmin">
   <div class="kotak-admin">
     <h3>💬 Pilih Admin WhatsApp</h3>
 
     <a id="adminSaifanah" class="pilih-admin" target="_blank">
-      🧕🏻 Saifanah
-    </a>
+  🧕🏻 Saifanah
+  <small>0819 1773 4172</small>
+</a>
 
-    <a id="adminHafshoh" class="pilih-admin" target="_blank">
-      🧕🏻 Hafshoh
-    </a>
+<a id="adminHafshoh" class="pilih-admin" target="_blank">
+  🧕🏻 Hafshoh
+  <small>0823 3230 2240</small>
+</a>
 
-    <a id="adminIkrima" class="pilih-admin" target="_blank">
-     🧕🏻 Ikrima
-    </a>
+<a id="adminIkrima" class="pilih-admin" target="_blank">
+  🧕🏻 Ikrima
+  <small>0853 3635 8441</small>
+</a>
 
-    <button class="tutup-admin" onclick="tutupPopupAdmin()">
+  <button class="tutup-admin" onclick="tutupPopupAdmin()">
       ✕ Tutup
     </button>
   </div>
 </div>
+  
+<div id="popupCheckout">
+  <div class="kotak-checkout">
+    <h3>💗 Checkout Pesanan</h3>
+
+    <input
+      type="text"
+      id="namaPemesan"
+      placeholder="Nama pemesan"
+    >
+
+    <div class="pilihan-pembayaran">
+  <button
+    id="tombolCash"
+    onclick="pilihPembayaran('Cash')"
+  >
+    <span class="centang-pilihan">✓</span>
+    💵 Cash
+  </button>
+
+  <button
+    id="tombolTransfer"
+    onclick="pilihPembayaran('Transfer Bank')"
+  >
+    <span class="centang-pilihan">✓</span>
+    🏦 Transfer
+  </button>
+    </div>
+    
+  <div id="rekeningTransfer" class="rekening-transfer">
+    <h4>💳 Pilihan Rekening Pembayaran</h4>
+
+  <div class="rekening-item">
+    <strong>💰 SAIFANAH HUMAIRA</strong>
+
+    <div class="nomor-rekening">
+      <span>BSI: 7189883026</span>
+      <button class="tombol-salin" onclick="salinRekening('7189883026', 'status7189883026')">📋</button>
+<span class="status-salin" id="status7189883026">✓ Tersalin</span>
+    </div>
+
+    <div class="nomor-rekening mandiri">
+  <span>Mandiri: 1400018234048</span>
+  <button class="tombol-salin" onclick="salinRekening('1400018234048', 'status1400018234048')">📋</button>
+  <span class="status-salin" id="status1400018234048">✓ Tersalin</span>
+    </div>
+  </div>
+
+  <div class="rekening-item">
+    <strong>💰 HAFSHOH FAISAL</strong>
+
+    <div class="nomor-rekening">
+      <span>BCA: 1921600301</span>
+      <button class="tombol-salin" onclick="salinRekening('1921600301', 'status1921600301')">📋</button>
+<span class="status-salin" id="status1921600301">✓ Tersalin</span>
+    </div>
+  </div>
+
+  <div class="catatan-transfer">
+    💗 Jangan lupa mengirimkan bukti transfer ya, terima kasih 🤗
+  </div>
+
+  </div>
+    
+<div class="cara-terima">
+  <h4>📦 Cara menerima pesanan</h4>
+
+<div class="pilihan-terima">
+
+  <button id="tombolAmbil" onclick="pilihCaraTerima('Ambil sendiri')">
+    <span class="centang-pilihan">✓</span>
+    🏠 Ambil sendiri
+  </button>
+
+  <button id="tombolAntar" onclick="pilihCaraTerima('Diantar kurir')">
+    <span class="centang-pilihan">✓</span>
+    🛵 Diantar kurir
+  </button>
+
+</div>
+
+  <div id="lokasiToko" class="info-pengambilan">
+    <strong>📍 Lokasi Pengambilan</strong>
+    <p>
+      <strong>Ala Chefana</strong><br>
+      Jl. Dirgahayu, Atoran, Bugih,<br>
+      Kec. Pamekasan, Kabupaten Pamekasan,<br>
+      Jawa Timur
+    </p>
+
+    <a
+      href="https://maps.app.goo.gl/TFPckY5qYk6D7zDr9"
+      target="_blank"
+      class="tombol-lokasi"
+    >
+      📍 Lihat lokasi
+    </a>
+  </div>
+
+  <div id="formAntar" class="info-pengantaran">
+    <strong>📍 Alamat Pengantaran</strong>
+
+    <textarea
+      id="alamatPengantaran"
+      placeholder="Tulis alamat lengkap untuk pengantaran..."
+    ></textarea>
+
+    <p>
+      🛵 Ongkir akan dikonfirmasi admin.
+    </p>
+  </div>
+</div>
+    
+<div class="catatan-tambahan">
+  <h4>💌 Catatan tambahan</h4>
+
+  <textarea
+    id="catatanTambahan"
+    placeholder="Ada pesan khusus untuk pesananmu? Tulis di sini yaa 💗"
+  ></textarea>
+</div>
+
+<div id="pesanValidasiCheckout">
+  💗 Yuk, lengkapi nama, metode pembayaran, dan cara menerima pesanan dulu yaa!
+</div>
+
+<button
+  class="tombol-lanjut-wa"
+  onclick="lanjutWhatsApp()"
+>
+  💬 Pesan via WhatsApp
+</button>
+    
+<button
+  class="tutup-checkout"
+  onclick="tutupCheckout()"
+>
+  ✕ Tutup
+</button>
+
+</div>
+</div>  
