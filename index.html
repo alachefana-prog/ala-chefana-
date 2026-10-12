@@ -422,14 +422,22 @@ background: rgba(79, 59, 95, 0.28);
 backdrop-filter: blur(4px);
 -webkit-backdrop-filter: blur(4px);
 z-index: 99998;
-align-items: center;
+align-items: flex-start;
 justify-content: center;
-padding: 20px;
+padding: 14px 12px 28px;
 box-sizing: border-box;
+overflow-y: auto;
+overflow-x: hidden;
+-webkit-overflow-scrolling: touch;
+overscroll-behavior-y: contain;
 }
 
 .kotak-checkout {
-width: 280px;
+width: 100%;
+max-width: 460px;
+box-sizing: border-box;
+flex: 0 0 auto;
+margin: auto 0;
 padding: 22px;
 background: rgba(255, 255, 255, 0.97);
 border: 1px solid #f0d8e7;
@@ -816,6 +824,25 @@ font-size: 13px;
   pointer-events: auto;
 }
 
+@media (max-width: 480px) {
+  #popupCheckout {
+    padding: 10px 10px 30px;
+    align-items: flex-start;
+  }
+  .kotak-checkout {
+    width: 100%;
+    padding: 18px 16px;
+    margin-top: 0;
+    margin-bottom: 12px;
+  }
+  .kotak-checkout input,
+  .kotak-checkout textarea,
+  .kotak-checkout button,
+  .kotak-checkout a {
+    max-width: 100%;
+  }
+}
+
 /* Peringatan checkout */
 #pesanValidasiCheckout {
   display: none;
@@ -1006,7 +1033,7 @@ tampilkanMenu();
 inputCari.addEventListener('input', () => {  
   tampilkanMenu();  
 });  
-
+  
 hapusCari.addEventListener('click', () => {  
   inputCari.value = '';  
   tampilkanMenu();  
@@ -1177,7 +1204,7 @@ document.getElementById('keranjangBesar').addEventListener('click', (e) => {
   
 tesKoneksi();  
 
- window.bukaPopupAdmin = function(nama) {
+window.bukaPopupAdmin = function(nama) {
   const pesan = encodeURIComponent(
     'Halo, saya mau pesan ' + nama
   );
@@ -1305,8 +1332,8 @@ window.lanjutWhatsApp = function() {
   });
 
   let total = 0;
-  
-Object.values(kelompok).forEach(item => {
+
+  Object.values(kelompok).forEach(item => {
     const subtotal = item.harga * item.jumlah;
     total += subtotal;
     pesan += `• ${item.nama} × ${item.jumlah} = Rp ${subtotal.toLocaleString('id-ID')}\n`;
@@ -1324,7 +1351,7 @@ Object.values(kelompok).forEach(item => {
   }
 
   if (catatan) {
-    pesan += `\n💌 *Catatan tambahan: ${catatan}*\n`;
+    pesan += `\n💌 Catatan tambahan: ${catatan}\n`;
   }
 
   if (metodePembayaran === 'Transfer Bank') {
